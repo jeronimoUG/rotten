@@ -241,6 +241,10 @@ function R(canvas, context) {
 			trace('The magnitude of '+lgh+'D Vector is: '+mag+'.');
 			return mag;
 		};
+		// VECTOR CROSS PRODUCT
+		this.cross = function(vector1, vector2) {
+			
+		};
 		// VECTOR FROM ONE POINT TO ANOTHER
 		this.fromTo = function(vector2, vector1) {
 			var vec = this.substract(vector1, vector2);
