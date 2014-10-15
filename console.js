@@ -59,9 +59,9 @@ function setConsole(tracer, bash) {
 		traces++;
 		for (var arg in arguments) {
 			if (arguments.length > 1) {
-				trc.value += '['+traces+'.'+(1+parseInt(arg))+'] '+arguments[arg]+'\n';
+				trc.innerHTML += '<span class="number" >['+traces+'.'+(1+parseInt(arg))+'</span>]<span class="base" > '+arguments[arg]+'</span><br>';
 			}else {
-				trc.value += '['+traces+'] '+arguments[arg]+'\n';
+				trc.innerHTML += '<span class="number" >['+traces+']</span><span class="base" > '+arguments[arg]+'</span><br>';
 			}
 		}
 		trc.scrollTop = trc.scrollHeight;
@@ -74,13 +74,14 @@ function setConsole(tracer, bash) {
 		if (val=='') {
 			ret = 'no string to evaluate.';
 		}else {
-			trace('evaluating '+val+' with JS.');
+			trace('<span class="response" >evaluating <span class="expression" >'+val+'</span> with JS.</span>');
 			try {
 				ret = eval(val);
 				trace(type(ret)+':result');
 			} catch (e) {
 				ret = e.message;
-				trace(ret+':error');
+				ret = ret.replace(val,'<span class="expression" >'+val+'</span>');
+				trace(ret+'<span class="error" >:error</span>');
 			}
 		}
 		return ret;

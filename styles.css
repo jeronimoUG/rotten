@@ -44,6 +44,7 @@ body {
     background:none;
 	color:lime;
 	padding:1%;
+	line-height: 11px;
 }
 .console-line {
 	display:block;
@@ -64,4 +65,20 @@ body {
 	width:4%;
 	height:15px;
 	left:2%;
+}
+/* CONSOLE COLORS */
+.number {
+    color:#999999;
+}
+.base {
+    color:lime;
+}
+.error {
+    color:red;
+}
+.response {
+    color:yellow;
+}
+.expression {
+    color:white;
 }
