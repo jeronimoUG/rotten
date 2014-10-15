@@ -88,22 +88,34 @@ function setConsole(tracer, bash) {
 	};
 	//
 	// CONSOLE INPUT
-	csl.addEventListener('keypress', function(e) {
+	csl.addEventListener('keydown', function(e) {
 		var val = this.value;
 		if (e.keyCode == 13) {
 			read(val);
 			htr.unshift(val);
 			this.value = '';
 		}else if (e.keyCode == 38) {
-			trace('up');
-			if ((tle+1)==htr.length) {
-				this.value = htr[tle]+':last';
-			}else {
+			e.preventDefault();
+			if (htr.length>=1) {
 				this.value = htr[tle];
+			}else {
+				this.value = '';
 			}
-			tle++;
+			if (tle<(htr.length-1)) {
+				tle++;
+			}
 		}else {
-			//trace(e.keyCode);
+			if (e.keyCode == 40) {
+				e.preventDefault();
+				if (htr.length>=1) {
+					this.value = htr[tle];
+				}else {
+					this.value = '';
+				}
+				if (tle>=0) {
+					tle--;
+				}
+			}
 		}
 	});
 	//
