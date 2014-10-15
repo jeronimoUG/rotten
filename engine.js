@@ -409,6 +409,6 @@ function R(canvas, context) {
 		return '[engine Rotten]';
 	};
 	//
-	trace('♠ rotten is ready, let\'s rot! ♠');
+	trace('<span style="color:yellow;" >♠</span> <span style="color:red;" >rotten</span><span style="color:white;" > is ready, let\'s rot! </span><span style="color:yellow;" >♠</span>');
 	//
 };
