@@ -243,24 +243,23 @@ function R(canvas, context) {
 		};
 		// VECTOR CROSS PRODUCT
 		this.cross = function(vector1, vector2) {
-			
+			var vec = vector1;
+			var lgh = Object.keys(vec).length;
+			if (lgh>3) {
+				trace('Vectors was not computed, this is a 3D vector exclusive operation.');
+				return null;
+			}else {
+				vec.x = (vector1.y*vector2.z)-(vector1.z*vector2.y);
+				vec.y = (vector1.z*vector2.x)-(vector1.x*vector2.z);
+				vec.z = (vector1.x*vector2.y)-(vector1.y*vector2.x);
+				trace('The cross product of two vectors is: '+vec+'.');
+				return vec;
+			}			
 		};
 		// VECTOR FROM ONE POINT TO ANOTHER
 		this.fromTo = function(vector2, vector1) {
 			var vec = this.substract(vector1, vector2);
 			return vec;
-		};
-		// VECTOR DOT PRODUCT
-		this.fuck = function(vector1, vector2) {
-			var sum = 0;
-			var vec1 = this.normalize(vector1);
-			var vec2 = this.normalize(vector2);
-			for (aa in vec1) {
-				sum += (vec1[aa]*vec2[aa]);
-			}
-			sum = this.magnitude(vector1)*this.magnitude(vector2)*Math.cos(Math.acos(sum));
-			trace('Dot product for two vectors is: '+sum+'!');
-			return sum;
 		};
 		// DISTANCE FROM POINT OT POINT
 		this.distance = function(vector1, vector2) {
