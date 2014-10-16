@@ -1,11 +1,84 @@
 // SETUP CONSOLE/TRACER
-function setConsole(tracer, bash) {
-	//
+function setConsole(frame) {
+	// ADDING ELEMENTS TO THE DOM
+	var html = '<div id="console" >'+
+			    '<code id="tracer" ></code>'+
+				'<label id="cmd-label" for="cmd" >\\></label>'+
+				'<input type="text" id="cmd" />'+
+			'</div>';
+	var css = '<style >/* CONSOLE STYLES */'+
+				'#console {'+
+				'	position:absolute;'+
+				'	font-family:Courier;'+
+				'	z-index:2;'+
+				'	background-color:rgba(0,0,0,0.5);'+
+				'	top:0px;'+
+				'	width:630px;'+
+				'	height:120px;'+
+				'	left:0px;'+
+				'	font-size:10px;'+
+				'	color:lime;'+
+				'	padding:5px;'+
+				'}'+
+				'#tracer {'+
+				'	position:absolute;'+
+				'	top:0px;'+
+				'	width:98%;'+
+				'	height:98px;'+
+				'	left:0%;'+
+				'	overflow-y:scroll;'+
+				'	border:none;'+
+				'    background:none;'+
+				'	color:lime;'+
+				'	padding:1%;'+
+				'	line-height: 11px;'+
+				'}'+
+				'.console-line {'+
+				'	display:block;'+
+				'}'+
+				'#cmd {'+
+				'	position:absolute;'+
+				'	bottom:0px;'+
+				'	width:94%;'+
+				'	height:20px;'+
+				'	left:6%;'+
+				'	border:none;'+
+				'	background:none;'+
+				'	color:lime;'+
+				'}'+
+				'#cmd-label {'+
+				'	position:absolute;'+
+				'	bottom:0px;'+
+				'	width:4%;'+
+				'	height:15px;'+
+				'	left:2%;'+
+				'}'+
+				'/* CONSOLE COLORS */'+
+				'.number {'+
+				'    color:#999999;'+
+				'}'+
+				'.base {'+
+				'    color:lime;'+
+				'}'+
+				'.error {'+
+				'    color:red;'+
+				'}'+
+				'.response {'+
+				'    color:yellow;'+
+				'}'+
+				'.expression {'+
+				'    color:white;'+
+				'}</style>';
+	// CAPTURING FRAME OBJECT AND ADDING THE ACTUAL ELEMENTS
+	var fr = document.getElementById(frame);
+	fr.innerHTML += html;
+	var hd = document.getElementsByTagName("head")[0];
+	hd.innerHTML += css;
 	// CAPTURING TRACER
-	var trc = document.getElementById(tracer);
+	var trc = document.getElementById('tracer');
 	//
 	// CAPTURING CONSOLE INPUT
-	var csl = document.getElementById(bash);
+	var csl = document.getElementById('cmd');
 	//
 	// CAPTURING CONOLE HISTORY
 	var htr = [];

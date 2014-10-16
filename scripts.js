@@ -5,18 +5,9 @@ var canvas, context, $;
 // EXECUTE AFTER LOAD
 window.onload = function(e) {
 	//
-	// PORPERTIES
-	//
-	// CAPATURING CANVAS
-	canvas = document.getElementById('screen');
-	//
-	// DEFINING CONTEXT
-	context = canvas.getContext('2d');
-	//
-	setConsole('tracer', 'cmd');	
 	// MAIN CODE AFTER LOADING
 	//
-	$ = new R(canvas, context);
+	$ = new R('screen', 'wrap');
 	//
 	$.G.isoGizmo(600);
 	//

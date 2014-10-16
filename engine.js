@@ -4,13 +4,20 @@
 //
 // THE ROTTEN OBJECT
 //
-function R(canvas, context) {
+function R(canvas, frame) {
 	////
 	// CORE
 	////
 	//
-	var c = canvas;
-	var ctx = context;
+	// SETTING UP CONSOLE
+	setConsole(frame);
+	// CAPATURING CANVAS
+	var c = document.getElementById(canvas);
+	//
+	// DEFINING CONTEXT
+	var ctx = c.getContext('2d');	
+	//
+	// OTHER IMPORTANT VARIABLES
 	var o = {x:(c.width/2), y:(c.height/2)};
 	//
 	////

@@ -20,6 +20,7 @@ body {
 	height:480px;
 	background-color:#000000;
 }
+/* CONSOLE STYLES 
 #console {
 	position:absolute;
 	font-family:Courier;
@@ -66,7 +67,7 @@ body {
 	height:15px;
 	left:2%;
 }
-/* CONSOLE COLORS */
+/* CONSOLE COLORS 
 .number {
     color:#999999;
 }
@@ -82,3 +83,4 @@ body {
 .expression {
     color:white;
 }
+*/
