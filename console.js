@@ -13,62 +13,90 @@ function setConsole(frame) {
 				'	z-index:2;'+
 				'	background-color:rgba(0,0,0,0.5);'+
 				'	top:0px;'+
-				'	width:630px;'+
-				'	height:120px;'+
+				'	width:640px;'+
+				'	height:130px;'+
 				'	left:0px;'+
 				'	font-size:10px;'+
 				'	color:lime;'+
-				'	padding:5px;'+
 				'}'+
 				'#tracer {'+
 				'	position:absolute;'+
 				'	top:0px;'+
 				'	width:98%;'+
-				'	height:98px;'+
+				'	height:115px;'+
 				'	left:0%;'+
 				'	overflow-y:scroll;'+
 				'	border:none;'+
 				'    background:none;'+
 				'	color:lime;'+
-				'	padding:1%;'+
-				'	line-height: 11px;'+
+				'	padding: 0 1% 0 1%;'+
+				'	line-height: 12px;'+
+				'}'+
+				'#tracer::-webkit-scrollbar-track {'+
+				'    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);'+
+				'    background-color: rgba(255,255,255,0.15);'+
+				'}'+
+				'#tracer::-webkit-scrollbar {'+
+				'    width: 10px;'+
+				'    background-color:rgba(255,255,255,0.15);'+
+				'}'+
+				'#tracer::-webkit-scrollbar-thumb {'+
+				'    background-color:rgba(255,255,255,0.15);'+
 				'}'+
 				'.console-line {'+
 				'	display:block;'+
 				'}'+
 				'#cmd {'+
 				'	position:absolute;'+
+				'	padding:0;'+
 				'	bottom:0px;'+
-				'	width:94%;'+
-				'	height:20px;'+
-				'	left:6%;'+
+				'	width:95%;'+
+				'	height:15px;'+
+				'	left:5%;'+
 				'	border:none;'+
 				'	background:none;'+
-				'	color:lime;'+
+				'	color:cyan;'+
+				'	font-size: 10px;'+
+				'	line-height:15px;'+
+				'	background-color:rgba(255, 255, 255, 0.15);'+
+				'	font-family:Courier;'+
+				'}'+
+				'#cmd:focus {'+
+				'	outline:none;'+
+				'	background-color:rgba(0,139,139,0.5);'+
 				'}'+
 				'#cmd-label {'+
 				'	position:absolute;'+
+				'	text-align:center;'+
+				'	line-height:15px;'+
 				'	bottom:0px;'+
-				'	width:4%;'+
+				'	width:5%;'+
 				'	height:15px;'+
-				'	left:2%;'+
+				'	background-color:rgba(255, 255, 255, 0.2);'+
 				'}'+
 				'/* CONSOLE COLORS */'+
 				'.number {'+
-				'    color:#999999;'+
+				'    color:grey;'+
 				'}'+
 				'.base {'+
-				'    color:lime;'+
+				'    color:greenyellow;'+
 				'}'+
 				'.error {'+
-				'    color:red;'+
+				'    color:crimson;'+
 				'}'+
 				'.response {'+
-				'    color:yellow;'+
+				'    color:cadetblue;'+
 				'}'+
 				'.expression {'+
-				'    color:white;'+
-				'}</style>';
+				'    color:aquamarine;'+
+				'}'+
+				'.type {'+
+				'	color:darkolivegreen;'+
+				'}'+
+				'.result {'+
+				'	color:cornflowerblue;'+
+				'}'+
+				'</style>';
 	// CAPTURING FRAME OBJECT AND ADDING THE ACTUAL ELEMENTS
 	var fr = document.getElementById(frame);
 	fr.innerHTML += html;
@@ -93,30 +121,30 @@ function setConsole(frame) {
 		var newVal;
 		switch(true) {
 			case (!!val) && (val.constructor === Number) :
-				newVal = val.toString()+':Number';
+				newVal = '<span class="expression" >'+val.toString()+'</span><span class="type" >:Number</span>';
 				break;
 			case (!!val) && (val.constructor === String) :
-				newVal = val.toString()+':String';
+				newVal = '<span class="expression" >'+val.toString()+'</span><span class="type" >:String</span>';
 				break;
 			case (!!val) && (val.constructor === Array) :
-				newVal = '';
+				newVal = '<span class="expression" >';
 				for (var aa in val) {
 					if (aa < (val.length-1)) {
 						newVal += val[aa].toString()+', ';
 					}else {
-						newVal += val[aa].toString()+':Array';
+						newVal += val[aa].toString()+'</span><span class="type" >:Array</span>';
 					}
 				}
 				break;
 			case (!!val) && (val.constructor === Vector) :
-				newVal = '';
+				newVal = '<span class="expression" >';
 				var bb = 0;
 				for (item in val) {
 					bb++;
 					if (bb < Object.keys(val).length) {
 						newVal += '"'+item.toString()+'" = '+val[item].toString()+', ';
 					}else {
-						newVal += '"'+item.toString()+'" = '+val[item].toString()+':Vector';
+						newVal += '"'+item.toString()+'" = '+val[item].toString()+'</span><span class="type" >:Vector</span>';
 					}
 				}
 				break;
@@ -132,7 +160,7 @@ function setConsole(frame) {
 		traces++;
 		for (var arg in arguments) {
 			if (arguments.length > 1) {
-				trc.innerHTML += '<span class="number" >['+traces+'.'+(1+parseInt(arg))+'</span>]<span class="base" > '+arguments[arg]+'</span><br>';
+				trc.innerHTML += '<span class="number" >['+traces+'.'+(1+parseInt(arg))+']</span><span class="base" > '+arguments[arg]+'</span><br>';
 			}else {
 				trc.innerHTML += '<span class="number" >['+traces+']</span><span class="base" > '+arguments[arg]+'</span><br>';
 			}
@@ -145,12 +173,12 @@ function setConsole(frame) {
 		var ret;
 		var val = val.toString();
 		if (val=='') {
-			ret = 'no string to evaluate.';
+			ret = '<span class="response">no string to evaluate.</span>';
 		}else {
 			trace('<span class="response" >evaluating <span class="expression" >'+val+'</span> with JS.</span>');
 			try {
 				ret = eval(val);
-				trace(type(ret)+':result');
+				trace(type(ret)+'<span class="result" >:result</span>');
 			} catch (e) {
 				ret = e.message;
 				ret = ret.replace(val,'<span class="expression" >'+val+'</span>');
