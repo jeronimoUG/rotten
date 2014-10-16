@@ -148,9 +148,9 @@ function R(canvas, frame) {
 		// ZEROING A VECTOR, REALLY?
 		this.zero = function(vector){
 			var vec = vector;
-			var lgh = Object.keys(vec).length;
-			for (aa in vec) {
-				vec[aa] = 0;
+			var lgh = vector.length;
+			for (var a=0;a<lgh;a++) {
+				vec[a] = 0;
 			}
 			trace('A '+lgh+'D Vector was "zeroed".');
 			return vec;
@@ -158,9 +158,9 @@ function R(canvas, frame) {
 		// VECTOR NEGATION
 		this.negate = function(vector) {
 			var vec = vector;
-			var lgh = Object.keys(vec).length;
-			for (aa in vec) {
-				vec[aa] = -vec[aa];
+			var lgh = vec.length;
+			for (var a=0;a<lgh;a++) {
+				vec[a] = -vec[a];
 			}
 			trace('A '+lgh+'D Vector was negated.');
 			return vec;
@@ -168,10 +168,10 @@ function R(canvas, frame) {
 		// VECTOR ADDITION
 		this.add = function(vector1, vector2) {
 			var vec = vector1;
-			var lgh = Object.keys(vec).length;
-			if (lgh == Object.keys(vector2).length) {
-				for (aa in vec) {
-					vec[aa] = vector1[aa]+vector2[aa];
+			var lgh = vec.length;
+			if (lgh == vector2.length) {
+				for (var a=0;a<lgh;a++) {
+					vec[a] = vector1[a]+vector2[a];
 				}
 				trace('Two '+lgh+'D vectors was added.');
 				return vec;
@@ -183,10 +183,10 @@ function R(canvas, frame) {
 		// VECTOR SUBSTRACTION
 		this.substract = function(vector1, vector2) {
 			var vec = vector1;
-			var lgh = Object.keys(vec).length;
-			if (lgh == Object.keys(vector2).length) {
-				for (aa in vec) {
-					vec[aa] = vector1[aa]-vector2[aa];
+			var lgh = vec.length;
+			if (lgh == vector2.length) {
+				for (var a=0;a<lgh;a++) {
+					vec[a] = vector1[a]-vector2[a];
 				}
 				trace('Two '+lgh+'D vectors was substracted.');
 				return vec;
@@ -198,9 +198,9 @@ function R(canvas, frame) {
 		// VECTOR SCALAR MULTIPLY
 		this.multiply = function(vector, scalar) {
 			var vec = vector;
-			var lgh = Object.keys(vec).length;
-			for (aa in vec) {
-				vec[aa] = vec[aa]*scalar;
+			var lgh = vec.length;
+			for (var a=0;a<lgh;a++) {
+				vec[a] = vec[a]*scalar;
 			}
 			trace('A '+lgh+'D Vector was multiplyed.');
 			return vec;
@@ -208,9 +208,9 @@ function R(canvas, frame) {
 		// VECTOR SCALAR DIVIDE
 		this.divide = function(vector, scalar) {
 			var vec = vector;
-			var lgh = Object.keys(vec).length;
-			for (aa in vec) {
-				vec[aa] = vec[aa]/scalar;
+			var lgh = vec.length;
+			for (var a=0;a<lgh;a++) {
+				vec[a] = vec[a]/scalar;
 			}
 			trace('A '+lgh+'D Vector was divided.');
 			return vec;
@@ -220,19 +220,21 @@ function R(canvas, frame) {
 			var sum = 0;
 			var vec1 = this.normalize(vector1);
 			var vec2 = this.normalize(vector2);
-			for (aa in vec1) {
-				sum += (vec1[aa]*vec2[aa]);
+			var lgh = vector1.length;
+			for (var a=0;a<lgh;a++) {
+				sum += (vec1[a]*vec2[a]);
 			}
-			sum = this.magnitude(vector1)*this.magnitude(vector2)*Math.cos(Math.acos(sum));
+			//sum = this.magnitude(vector1)*this.magnitude(vector2)*Math.cos(Math.acos(sum));
 			trace('Dot product for two vectors is: '+sum+'!');
 			return sum;
 		};
 		// VECTOR NORMALIZATION
 		this.normalize = function(vector) {
 			var vec = vector;
-			var val = this.dot(vec,vec);
+			var lgh = vector.length;
+			var val = this.magnitude(vec,vec);
 			if (val>0) {
-				vec = this.multiply(vec,1/Math.sqrt(val));
+				vec = this.multiply(vec,1/val);
 			}
 			trace('A '+lgh+'D Vector was normalized.');
 			return vec;
@@ -240,9 +242,10 @@ function R(canvas, frame) {
 		// VECTOR MAGNITUDE
 		this.magnitude = function(vector) {
 			var sum = 0;
-			var lgh = Object.keys(vector).length;
-			for (aa in vector) {
-				sum += Math.pow(vector[aa], 2);
+			var lgh = vector.length;
+			for (var a=0;a<lgh;a++) {
+				sum += Math.pow(vector[a], 2);
+				trace(a, sum);
 			}
 			var mag = Math.sqrt(sum);
 			trace('The magnitude of '+lgh+'D Vector is: '+mag+'.');
@@ -290,6 +293,7 @@ function R(canvas, frame) {
 		// INTERNAL PROPERTIES
 		var o = {};
 		var l = arguments.length;
+		this.length = l;
 		// ASSEMBLING THE VECTOR
 		if (l!=0) {
 			for (var arg in arguments) {
@@ -298,35 +302,45 @@ function R(canvas, frame) {
 						trace(arg);
 						if (arg==0) {
 							trace(arguments[arg]);
+							this[arg] = arguments[arg];
 							this['x'] = arguments[arg];
 						}
 						break;
 					case 2 :
 						if (arg==0) {
 							this['x'] = arguments[arg];
+							this[arg] = arguments[arg];
 						}else if (arg==1) {
 							this['y'] = arguments[arg];
+							this[arg] = arguments[arg];
 						}
 						break;
 					case 3 :
 						if (arg==0) {
 							this['x'] = arguments[arg];
+							this[arg] = arguments[arg];
 						}else if (arg==1) {
 							this['y'] = arguments[arg];
+							this[arg] = arguments[arg];
 						}else {
 							this['z'] = arguments[arg];
+							this[arg] = arguments[arg];
 						}
 						break;
 					case 4 :
 						if (arg==0) {
 							this['x'] = arguments[arg];
+							this[arg] = arguments[arg];
 						}else if (arg==1) {
 							this['y'] = arguments[arg];
+							this[arg] = arguments[arg];
 						}else {
 							if (arg==2) {
 								this['z'] = arguments[arg];
+								this[arg] = arguments[arg];
 							}else if (arg==3) {
 								this['w'] = arguments[arg];
+								this[arg] = arguments[arg];
 							}
 						}
 						break;
